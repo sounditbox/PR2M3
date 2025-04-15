@@ -1,0 +1,43 @@
+[project]
+name = "my-proj"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "'Ruslan",email = "'sounditbox@gmail.com'"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests (>=2.32.3,<3.0.0)",
+    "django (>=5.2,<6.0)",
+]
+
+[tool.poetry]
+packages = [{include = "my_proj", from = "src"}]
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+
+
+[tool.poetry.group.lint.dependencies]
+flake8 = "^7.2.0"
+mypy = "^1.15.0"
+black = "^25.1.0"
+isort = "^6.0.1"
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+strict = true
+disallow_untyped_defs = true
+warn_unused_ignores = true
+
+[tool.poetry.scripts]
+run = "src.my_proj.main:f"
+run_tests = 'tests.test1:test_f'
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
