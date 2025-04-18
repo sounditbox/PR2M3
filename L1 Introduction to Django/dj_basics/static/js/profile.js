@@ -1,0 +1,1 @@
+console.log('Connected static js file!');

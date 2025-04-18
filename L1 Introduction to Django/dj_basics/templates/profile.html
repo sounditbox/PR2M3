@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile {{ profile.name }}</title>
+</head>
+<body>
+<h1>Profile: {{ profile.name }}</h1>
+<h2>Age: {{ profile.age }}</h2>
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="name">Your name</label>
+        <input type="text" name="name" id="name">
+        <label for="age">Your age</label>
+        <input type="text" name="age" id="age">
+        <input type="submit" value="Send">
+    </form>
+</div>
+<script src="/static/js/profile.js"></script>
+</body>
+</html>
