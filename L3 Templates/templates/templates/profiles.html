@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}All profiles{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+<h1>All profiles</h1>
+<ul>
+{% for id, profile in profiles.items %}
+    <li><a href="{% url 'profile' id %}">{{ profile.username }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
