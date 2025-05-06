@@ -1,0 +1,30 @@
+{% extends "posts/base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+{% if articles %}
+<ul class="list-group">
+    {% for article in articles %}
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-8">
+                <a href="{% url 'article_detail' article.pk %}">
+                <p>{{ article.title|title }}</p>
+                {% if not article.is_published %}<em>(черновик)</em>{% endif %}
+            </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'article_edit' article.pk %}" class="btn btn-secondary">Редактировать</a>
+            </div>
+            <div class="col">
+                <a href="{% url 'article_delete' article.pk %}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Нет доступных статей.</p>
+{% endif %}
+{% endblock %}

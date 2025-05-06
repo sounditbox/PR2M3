@@ -1,0 +1,21 @@
+{% extends "posts/base.html" %}
+{% block title %}Статья:{{ article.title }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>{{ article.title }}{% if not article.is_published %}<em>(черновик)</em>{% endif %}</h1>
+    <p>{{ article.content }}</p>
+    <p class="text-muted">Создано: {{ article.created_at|date:"H:i d.m.Y" }}</p>
+    <div class="row">
+        <div class="col-2">
+            <a href="{% url 'article_edit' article.pk %}"
+               class="btn btn-secondary">Редактировать</a>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'article_delete' article.pk %}"
+               class="btn btn-danger">Удалить</a>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
