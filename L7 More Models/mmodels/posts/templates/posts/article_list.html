@@ -1,0 +1,51 @@
+    {% extends "posts/base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+{% if articles %}
+<ul class="list-group">
+    {% for article in articles %}
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-8">
+                <a href="{% url 'article_detail' article.pk %}">
+                    <h3>{{ article.title|title }}</h3>
+                    <h4>{{ article.author }}</h4>
+                    <p>{{ article.content|truncatewords:20 }}</p>
+                    <p>👁️: {{ article.views }}</p>
+                    <p>💬: {{ article.comments.count }}</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'article_edit' article.pk %}"
+                   class="btn btn-secondary">Редактировать</a>
+            </div>
+            <div class="col">
+                <a href="{% url 'article_delete' article.pk %}"
+                   class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{# Навигация по страницам #}
+<div class="pagination">
+<span class="step-links">
+{% if page_obj.has_previous %}
+<a href="?page=1">« первая</a>
+<a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+{% endif %}
+<span class="current">
+Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+</span>
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">следующая</a>
+<a href="?page={{ page_obj.paginator.num_pages }}">последняя »</a>
+{% endif %}
+</span>
+</div>
+{% else %}
+<p>Нет доступных статей.</p>
+{% endif %}
+{% endblock %}
