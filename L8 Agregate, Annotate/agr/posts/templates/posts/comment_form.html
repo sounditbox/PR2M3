@@ -1,0 +1,8 @@
+<form class="form" method="post" action="{% url 'comment_create' article.pk %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="text" class="form-control"
+               placeholder="Введите комментарий" name="text">
+        <input class="btn btn-primary" type="submit" value="Отправить">
+    </div>
+</form>
