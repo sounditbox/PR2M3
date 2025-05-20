@@ -38,6 +38,8 @@ class Article(TimeStampedModel):
             models.Index(fields=['-created_at']),
 
         ]
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
 
     def __str__(self):
         return self.title
@@ -68,6 +70,10 @@ class Comment(TimeStampedModel):
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+
+
+    class Meta:
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
