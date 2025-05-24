@@ -1,0 +1,12 @@
+{% extends 'posts/base.html' %}
+
+{% block title %}Удаление {{article.name}}{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.errors }}
+    <input class="btn btn-primary" type="submit" value="Создать">
+</form>
+{% endblock %}
