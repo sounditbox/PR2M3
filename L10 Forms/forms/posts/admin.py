@@ -1,4 +1,5 @@
 from django.contrib import admin, messages
+from django.utils.safestring import mark_safe
 
 from .models import Article, Tag, Category, Author, Comment
 
@@ -51,7 +52,8 @@ class CommentInline(admin.TabularInline):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ("title", "status",
-                    "author", "category", "created_at", "unmodified_since")
+                    "author", "category", "created_at", "unmodified_since",
+                    'image_admin')
     list_display_links = ("title",)
     list_editable = ("status", 'category', 'author')
     list_filter = ("status", 'category', 'author')
@@ -66,7 +68,7 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields': ('title', 'author', 'status', 'views', 'category')
         }),
         ('Содержимое поста', {
-            'fields': ('content', 'tags'),
+            'fields': ('content', 'image', 'tags'),
             'classes': ('collapse',),
             'description': 'Основной текст и теги для поста.'
         }),
@@ -81,6 +83,13 @@ class ArticleAdmin(admin.ModelAdmin):
         if article.created_at == article.updated_at:
             return "Unmodified"
         return str(article.updated_at - article.created_at).split(".")[0]
+
+    @admin.display(description="Image")
+    def image_admin(self, article: Article):
+        if article.image:
+            return mark_safe(
+                f'<img src="{article.image.url}" width="100"/>')
+        return "None"
 
 
 admin.site.register(Tag)

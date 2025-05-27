@@ -26,6 +26,8 @@ class Article(TimeStampedModel):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=STATUS_CHOICES[0][0])
 
+    image = models.ImageField(upload_to='images/', null=True)
+
     views = models.PositiveIntegerField(default=0)
     category = models.ForeignKey('Category', on_delete=models.PROTECT,
                                  null=True)

@@ -7,7 +7,9 @@ from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView, \
     CreateView, UpdateView
 
-from .forms import ContactForm, ArticleCreateForm, ArticleEditForm, CommentForm
+from config.settings import MEDIA_ROOT
+from .forms import ContactForm, ArticleCreateForm, ArticleEditForm, CommentForm, \
+    UploadFileForm
 from .models import Article, Comment
 
 
@@ -20,6 +22,23 @@ class SimpleView(View):
 
 class AboutView(TemplateView):
     template_name = "posts/about.html"
+
+
+# def upload_file(request):
+#     if request.method == "POST":
+#         form = UploadFileForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             handle_uploaded_file(request.FILES["file"])
+#             return HttpResponseRedirect("/success/url/")
+#     else:
+#         form = UploadFileForm()
+#     return render(request, "upload.html", {"form": form})
+
+
+def handle_uploaded_file(f):
+    with open(MEDIA_ROOT / f.name, "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 
 class ArticleListView(ListView):

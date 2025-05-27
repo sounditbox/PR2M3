@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import SimpleView, AboutView, ArticleListView, ArticleDetailView, \
-    ArticleDeleteView, ArticleCreateView, ArticleUpdateView, create_comment, stats, contacts
+    ArticleDeleteView, ArticleCreateView, ArticleUpdateView, create_comment, \
+    stats, contacts
 
 urlpatterns = [
     path('simple/', SimpleView.as_view(), name='simple'),

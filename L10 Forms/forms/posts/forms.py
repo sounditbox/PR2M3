@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.forms import fields, ModelForm, TextInput, Textarea, Select, \
-    SelectMultiple, Form
+    SelectMultiple, Form, FileField, FileInput
 
 from .models import Article, Comment  # Импорт модели
 
@@ -47,22 +47,16 @@ class ContactForm(Form):
 
 
 class ArticleCreateForm(ModelForm):
-    extra_field = fields.CharField(
-        required=False,
-        widget=fields.Textarea(
-            attrs={'class': 'form-control', 'placeholder': 'Доп.инфо'})
-
-    )
-
     class Meta:
         model = Article  # Указываем модель
-        fields = ["title", "content", "status", "category", 'tags']
+        fields = ["title", 'image', "content", "status", "category", 'tags']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control'}),
             'content': Textarea(attrs={'class': 'form-control'}),
             'status': Select(attrs={'class': 'form-control'}),
             'category': Select(attrs={'class': 'form-control'}),
             'tags': SelectMultiple(attrs={'class': 'form-control'}),
+            'image': FileInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'title': 'Заголовок',
@@ -70,6 +64,7 @@ class ArticleCreateForm(ModelForm):
             'status': 'Статус',
             'category': 'Категория',
             'tags': 'Теги',
+            'image': 'Изображение',
         }
 
 
@@ -100,3 +95,7 @@ class CommentForm(ModelForm):
         labels = {
             'content': 'Комментарий'
         }
+
+
+class UploadFileForm(Form):
+    file = FileField()
