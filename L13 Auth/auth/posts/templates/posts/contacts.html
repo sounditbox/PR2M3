@@ -1,0 +1,23 @@
+{% extends "posts/base.html" %}
+
+{% block content %}
+<h1>Contacts</h1>
+<p>Phone:+7 (999) 999-99-99</p>
+<p>Email: <a href="mailto:1EY3o@example.com">1EY3o@example.com</a></p>
+<div class="container">
+    <h2>Связаться с нами</h2>
+    <form action="{% url 'contacts' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <div class="row">
+                {{ field }}<br>
+                <div class="form-error">{{ field.errors }}</div>
+                </div>
+            </div>
+
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+{% endblock content %}

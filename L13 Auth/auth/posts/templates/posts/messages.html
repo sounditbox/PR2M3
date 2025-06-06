@@ -1,0 +1,18 @@
+{% if messages %} {# 1. Проверяем, есть ли сообщения #}
+<div class="messages" id="message-container">
+    {% for message in messages %} {# 2. Итерируем по сообщениям #}
+    {# 3. Выводим каждое сообщение #}
+    <div class="alert {{ message.tags }} alert-dismissible fade show"
+         role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+
+

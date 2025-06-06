@@ -1,0 +1,47 @@
+{% extends "posts/base.html" %}
+{% block title %}Статья:{{ article.title }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>{{ article.title }}</h1>
+    <h6>{{ article.status }}</h6>
+    <h6 class="text-muted">{{ article.category.name }}</h6>
+    <h4>{{ article.author.name }}</h4>
+    {% if article.image %}
+        <img src="{{ article.image.url }}" alt="image">
+    {% endif %}
+    <p>{{ article.content }}</p>
+    {% if article.created_at != article.updated_at %}
+    <p class="text-muted">{{ article.updated_at}} <i>(ред.)</i></p>
+    {% else %}
+    <p class="text-muted">{{ article.created_at }}</p>
+    {% endif %}
+    <p class="text-muted">👁️: {{ article.views }}</p>
+    <div class="row">
+        <div class="col-2">
+            <a href="{% url 'article_edit' article.pk %}"
+               class="btn btn-secondary">Редактировать</a>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'article_delete' article.pk %}"
+               class="btn btn-danger">Удалить</a>
+        </div>
+
+    </div>
+
+</div>
+<div class="card">
+    {% include "posts/comment_form.html" %}
+    <h2>Комментарии</h2>
+    <ul class="list-group">
+        {% for comment in article.comments.all %}
+        <li class="list-group-item">
+            <p>{{ comment.author.name }}</p>
+            <p>{{ comment.content }}</p>
+            <p class="text-muted">Создано: {{ comment.created_at|date:"H:i d.m.Y" }}</p>
+            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'comment_delete' comment.pk %}'">Удалить
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
