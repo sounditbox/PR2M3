@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import SimpleView, AboutView, ArticleListView, ArticleDetailView, \
-    ArticleDeleteView, ArticleCreateView, ArticleUpdateView, create_comment, \
-    stats, contacts
-
+from .views import (SimpleView, AboutView, ArticleListView, ArticleDetailView, \
+    ArticleDeleteView, ArticleCreateView, ArticleUpdateView, CommentDeleteView,
+                    create_comment, stats, contacts)
 urlpatterns = [
     path('simple/', SimpleView.as_view(), name='simple'),
     path('about/', AboutView.as_view(), name='about'),
@@ -27,8 +26,12 @@ urlpatterns = [
     path('articles/edit/<int:pk>/',
          ArticleUpdateView.as_view(),
          name='article_edit'),
-    path('articles/<int:pk>/comment/', create_comment, name='comment_create'),
+    path('articles/<int:pk>/comment/', create_comment,
+         name='comment_create'),
+    path('comments/<int:pk>/delete/', CommentDeleteView.as_view(),
+         name='comment_delete'),
     path('articles/stats/', stats, name='stats'),
 ]
+
 
 # CRUD

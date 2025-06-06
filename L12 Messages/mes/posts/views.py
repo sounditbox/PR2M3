@@ -1,4 +1,6 @@
-from django.db.models import Count, Avg, Min, Max
+from config.settings import MEDIA_ROOT
+from django.contrib import messages
+from django.db.models import Count, Avg, Min, Max, ProtectedError
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -7,9 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView, \
     CreateView, UpdateView
 
-from config.settings import MEDIA_ROOT
-from .forms import ContactForm, ArticleCreateForm, ArticleEditForm, CommentForm, \
-    UploadFileForm
+from .forms import ContactForm, ArticleCreateForm, ArticleEditForm, CommentForm
 from .models import Article, Comment
 
 
@@ -76,17 +76,57 @@ class ArticleDeleteView(DeleteView):
     template_name = 'posts/article_confirm_delete.html'
     success_url = reverse_lazy('article_list')
 
+    def form_valid(self, form):
+        try:
+            res = super().form_valid(form)
+            messages.success(self.request,
+                             f'Пост {self.object.pk} успешно удален!')
+            return res
+        except ProtectedError:
+            messages.error(self.request,
+                           f'Пост {self.object.pk} нельзя удалить, т.к. имеет связанные комментарии')
+            return super().form_invalid(form)
 
 class ArticleCreateView(CreateView):
     model = Article
     form_class = ArticleCreateForm
     template_name = 'posts/article_create.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Пост успешно создан')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Пост не создан')
+        return super().form_invalid(form)
+
 
 class ArticleUpdateView(UpdateView):
     model = Article
     form_class = ArticleEditForm
     template_name = 'posts/article_edit.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Пост успешно обновлен')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Пост не обновлен')
+
+        return super().form_invalid(form)
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    context_object_name = 'comment'
+    template_name = 'posts/comment_confirm_delete.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Комментарий успешно удален')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('article_detail', kwargs={'pk': self.object.article.pk})
 
 
 @require_POST
@@ -124,9 +164,11 @@ def contacts(request: HttpRequest) -> HttpResponse:
         form = ContactForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data)
+            messages.success(request, 'Спасибо за заявку!')
             return redirect('contacts')
         else:
             print(form.errors)
+            messages.error(request, 'Заполните форму правильно!')
             return render(request, 'posts/contacts.html',
                           context={'form': form})
 

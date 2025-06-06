@@ -59,7 +59,7 @@ class Comment(TimeStampedModel):
     author = models.ForeignKey('Author', on_delete=models.PROTECT,
                                related_name='comments', null=True)
     article = models.ForeignKey(Article,
-                                on_delete=models.CASCADE,
+                                on_delete=models.PROTECT,
                                 related_name='comments')
     content = models.TextField()
 

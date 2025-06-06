@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.contrib import messages
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*u^xm$$y!fc8y)9lvjx_8m6gs7b9dv5v@_x!2)@iey0em2u)(e"
 DEBUG = True
@@ -25,7 +27,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-dark',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [

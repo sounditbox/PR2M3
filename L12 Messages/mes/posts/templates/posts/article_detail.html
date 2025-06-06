@@ -38,6 +38,8 @@
             <p>{{ comment.author.name }}</p>
             <p>{{ comment.content }}</p>
             <p class="text-muted">Создано: {{ comment.created_at|date:"H:i d.m.Y" }}</p>
+            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'comment_delete' comment.pk %}'">Удалить
+            </button>
         </li>
         {% endfor %}
     </ul>

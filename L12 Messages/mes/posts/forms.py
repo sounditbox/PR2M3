@@ -6,19 +6,20 @@ from .models import Article, Comment  # Импорт модели
 
 
 class ContactForm(Form):
-    subject = fields.CharField(max_length=100, min_length=3, label="Тема",
+    subject = fields.CharField( required=False,
+        max_length=100, min_length=3, label="Тема",
 
                                widget=fields.TextInput(attrs={
                                    'class': 'form-control form-control-lg',
                                    'placeholder': 'Введите тему сообщения'}))
-    name = fields.CharField(
+    name = fields.CharField(required=False,
         label="Имя",
         widget=fields.TextInput(attrs={
             'class': 'form-control form-control-lg',
             'placeholder': 'Введите ваше полное имя'
         })
     )
-    message = fields.CharField(
+    message = fields.CharField(required=False,
         label="Сообщение",
         widget=fields.Textarea(attrs={
             'class': 'form-control',
@@ -27,7 +28,7 @@ class ContactForm(Form):
             'placeholder': 'Введите ваше сообщение'
         })
     )
-    agree = fields.BooleanField(
+    agree = fields.BooleanField(required=False,
         label="Согласен с условиями",
         widget=fields.CheckboxInput(
             attrs={'class': 'form-control form-check-input'})
@@ -44,6 +45,9 @@ class ContactForm(Form):
         if "spam" in sender:
             raise ValidationError("Spam is not allowed")
         return sender
+
+    class Meta:
+        required = ['name', 'message']
 
 
 class ArticleCreateForm(ModelForm):
@@ -87,7 +91,7 @@ class ArticleEditForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ['author', 'content']
         widgets = {
             'content': Textarea(attrs={'class': 'form-control',
                                        'placeholder': "Введите комментарий"}),
