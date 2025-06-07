@@ -30,7 +30,11 @@
 
 </div>
 <div class="card">
+    {% if user.is_authenticated %}
     {% include "posts/comment_form.html" %}
+    {% else %}
+    <p><a href="{% url 'users:login' %}">Войдите</a> или <a href="{% url 'users:login' %}">зарегистрируйтесь</a>, чтобы оставить комментарий</p>
+    {% endif %}
     <h2>Комментарии</h2>
     <ul class="list-group">
         {% for comment in article.comments.all %}

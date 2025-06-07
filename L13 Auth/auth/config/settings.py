@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*u^xm$$y!fc8y)9lvjx_8m6gs7b9dv5v@_x!2)@iey0em2u)(e"
@@ -16,6 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'django_extensions',
     "posts",
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -91,3 +93,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = reverse_lazy('article_list')
+LOGOUT_REDIRECT_URL = reverse_lazy('article_list')
+LOGIN_URL = reverse_lazy('login')

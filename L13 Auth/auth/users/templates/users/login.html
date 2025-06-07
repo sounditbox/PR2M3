@@ -1,0 +1,16 @@
+{% extends 'posts/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<h1>Вход</h1>
+<div class="container">
+<form method="post" class="post-form" action="{% url 'users:login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Войти">
+</form>
+    <p>Еще не зарегистрированы?</p>
+    <a class="btn btn-primary" href="{% url 'users:register' %}">Зарегистрироваться</a>
+</div>
+{% endblock %}

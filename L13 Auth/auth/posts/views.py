@@ -1,5 +1,7 @@
 from config.settings import MEDIA_ROOT
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Avg, Min, Max, ProtectedError
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
@@ -13,7 +15,7 @@ from .forms import ContactForm, ArticleCreateForm, ArticleEditForm, CommentForm
 from .models import Article, Comment
 
 
-class SimpleView(View):
+class SimpleView(LoginRequiredMixin, View):
     message = "Default message"
 
     def get(self, request, *args, **kwargs):
@@ -70,7 +72,7 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     context_object_name = 'article'
     template_name = 'posts/article_confirm_delete.html'
@@ -87,7 +89,8 @@ class ArticleDeleteView(DeleteView):
                            f'Пост {self.object.pk} нельзя удалить, т.к. имеет связанные комментарии')
             return super().form_invalid(form)
 
-class ArticleCreateView(CreateView):
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleCreateForm
     template_name = 'posts/article_create.html'
@@ -101,7 +104,7 @@ class ArticleCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = ArticleEditForm
     template_name = 'posts/article_edit.html'
@@ -116,7 +119,7 @@ class ArticleUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class CommentDeleteView(DeleteView):
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
     context_object_name = 'comment'
     template_name = 'posts/comment_confirm_delete.html'
@@ -130,6 +133,7 @@ class CommentDeleteView(DeleteView):
 
 
 @require_POST
+@login_required
 def create_comment(request: HttpRequest, pk: int) -> HttpResponse:
     article = get_object_or_404(Article, pk=pk)
 
@@ -143,7 +147,7 @@ def create_comment(request: HttpRequest, pk: int) -> HttpResponse:
 
     return redirect('article_detail', pk=article.pk)
 
-
+@login_required
 def stats(request: HttpRequest) -> HttpResponse:
     a_stats = Article.objects.aggregate(
         total_posts=Count('pk'),  # Общее количество постов

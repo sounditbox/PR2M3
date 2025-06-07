@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 
-from .models import Article, Tag, Category, Author, Comment
+from .models import Article, Tag, Category, Comment, Author
 
 admin.site.site_title = "Blog Admin Site"
 admin.site.site_header = "Blog Admin"
@@ -92,8 +92,12 @@ class ArticleAdmin(admin.ModelAdmin):
         return "None"
 
 
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ("name", "user")
+
+
 admin.site.register(Tag)
 admin.site.register(Category)
-admin.site.register(Author)
 
 # admin.site.register(Comment)

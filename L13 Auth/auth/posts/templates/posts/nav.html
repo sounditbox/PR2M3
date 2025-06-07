@@ -7,5 +7,15 @@
 
     </div>
 
-    <a href="{% url 'article_create' %}" class="btn-primary">Новая запись</a>
+    {% if user.is_authenticated %}
+    <div class="nav-links">
+        <p>{{ user.username }}</p>
+        <form action="{% url 'users:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Выйти</button>
+        </form>
+    </div>
+    {% else %}
+    <a href="{% url 'users:login' %}" class="btn btn-primary">Войти</a>
+    {% endif %}
 </nav>
