@@ -10,7 +10,9 @@
     {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Войти">
 </form>
-    <p>Еще не зарегистрированы?</p>
-    <a class="btn btn-primary" href="{% url 'users:register' %}">Зарегистрироваться</a>
+    <a href="{% url 'users:password_reset' %}">Забыли пароль?</a></a>
+    <p>Нет аккаунта? <a href="{% url 'users:register' %}">Зарегистрироваться</a>
+    </p>
+
 </div>
 {% endblock %}

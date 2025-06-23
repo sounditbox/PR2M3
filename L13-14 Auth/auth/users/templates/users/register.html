@@ -7,7 +7,16 @@
 <div class="container">
 <form method="post" class="post-form" action="{% url 'users:register' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.errors }}
+    {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="row">
+            {{ field }}<br>
+            <div class="form-error">{{ field.errors }}</div>
+            </div>
+        </div>
+    {% endfor %}
     <input class="btn btn-primary" type="submit" value="Зарегистрироваться">
 </form>
 <p>Есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>

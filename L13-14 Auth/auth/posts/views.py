@@ -94,9 +94,11 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleCreateForm
     template_name = 'posts/article_create.html'
+    extra_context = {'title': 'Новый пост'}
 
     def form_valid(self, form):
         messages.success(self.request, 'Пост успешно создан')
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -142,10 +144,12 @@ def create_comment(request: HttpRequest, pk: int) -> HttpResponse:
     if form.is_valid():
         comment = form.save(commit=False)
         comment.article = article
+        comment.author = request.user
         comment.save()
         return redirect('article_detail', pk=article.pk)
 
     return redirect('article_detail', pk=article.pk)
+
 
 @login_required
 def stats(request: HttpRequest) -> HttpResponse:

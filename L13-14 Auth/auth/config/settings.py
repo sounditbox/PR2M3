@@ -77,7 +77,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+from django.contrib.auth.password_validation import CommonPasswordValidator
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -96,4 +96,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = reverse_lazy('article_list')
 LOGOUT_REDIRECT_URL = reverse_lazy('article_list')
-LOGIN_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('users:login')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTH_USER_MODEL = "users.User"

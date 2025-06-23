@@ -72,6 +72,7 @@ class ArticleCreateForm(ModelForm):
         }
 
 
+
 class ArticleEditForm(ModelForm):
     class Meta:
         model = Article  # Указываем модель

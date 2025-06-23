@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
@@ -18,8 +19,8 @@ class Article(TimeStampedModel):
         ('deleted', 'Deleted'),
     )
 
-    author = models.ForeignKey('Author', on_delete=models.CASCADE,
-                               related_name='articles', null=True)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
+                               related_name='articles')
     title = models.CharField(max_length=200)
     tags = models.ManyToManyField('Tag', related_name='articles')
     content = models.TextField(blank=True)
@@ -56,8 +57,8 @@ class Article(TimeStampedModel):
 
 
 class Comment(TimeStampedModel):
-    author = models.ForeignKey('Author', on_delete=models.PROTECT,
-                               related_name='comments', null=True)
+    author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT,
+                               related_name='comments')
     article = models.ForeignKey(Article,
                                 on_delete=models.PROTECT,
                                 related_name='comments')
@@ -75,14 +76,6 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Categories"
-
-    def __str__(self):
-        return self.name
-
-
-class Author(models.Model):
-    name = models.CharField(max_length=50)
-    user = models.OneToOneField('auth.User', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.name

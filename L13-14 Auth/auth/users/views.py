@@ -1,60 +1,35 @@
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import login, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import DetailView, UpdateView
 
-
-
-# def login_view(request: HttpRequest) -> HttpResponse:
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             user = authenticate(request, username=cd['username'],
-#                                 password=cd['password'])
-#             if user is not None and user.is_active:
-#                 login(request, user)
-#             return redirect('article_list')
-#
-#     else:
-#         form = LoginForm()
-#     return render(request, 'users/login.html', context={'form': form})
-#
-#
-# @login_required
-# def logout_view(request: HttpRequest) -> HttpResponse:
-#     logout(request)
-#     return redirect('article_list')
-
-class CustomLoginView(LoginView):
-    template_name = 'users/login.html'
-
-
-# class RegisterView(CreateView):
-#     template_name = 'users/register.html'
-#     form_class = CreateUserForm
-#     success_url = reverse_lazy('article_list')
-#
-#     def form_valid(self, form):
-#         form.save()
-#         return super().form_valid(form)
+from .forms import CreateUserForm, ProfileForm
 
 
 def register_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             messages.success(request, 'Пользователь успешно создан')
-            return redirect('article_list')
+            return redirect('users:profile')
         else:
-            messages.error(request, f'Заполните форму правильно! {form.errors}')
+            print(form.errors)
+            messages.error(request, f'Заполните форму правильно!')
+            return redirect('users:register')
     else:
-        form = UserCreationForm()
+        form = CreateUserForm()
     return render(request, 'users/register.html', context={'form': form})
+
+
+class ProfileView(UpdateView, LoginRequiredMixin):
+    model = get_user_model()
+    form_class = ProfileForm
+    template_name = 'users/profile.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
