@@ -1,0 +1,16 @@
+{% extends "posts/base.html" %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<h1>Статистика</h1>
+<p>Всего статей: {{ total_posts }}</p>
+<p>Минимальное количество просмотров: {{ min_views }}</p>
+<p>Средние количество просмотров: {{ avg_views }}</p>
+<p>Максимальное количество просмотров: {{ max_views }}</p>
+<p>Всего комментариев: {{ total_comments }}</p>
+<p>Количество уникальных авторов : {{ posts_unique_authors }}</p>
+<p>Количество уникальных авторов: {{ comments_unique_authors }}</p>
+
+
+{% endblock %}
