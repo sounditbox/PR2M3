@@ -7,7 +7,8 @@ from . import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('posts.urls')),
-    path('users/', include('users.urls', namespace='users'))
+    path('users/', include('users.urls', namespace='users')),
+    path('api/v1/', include('posts.api.urls'), name='api'),
 
 ]
 

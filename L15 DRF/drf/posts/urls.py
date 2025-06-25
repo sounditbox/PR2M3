@@ -3,6 +3,9 @@ from django.urls import path
 from .views import (SimpleView, AboutView, ArticleListView, ArticleDetailView, \
     ArticleDeleteView, ArticleCreateView, ArticleUpdateView, CommentDeleteView,
                     create_comment, stats, contacts)
+
+app_name = 'posts'
+
 urlpatterns = [
     path('simple/', SimpleView.as_view(), name='simple'),
     path('about/', AboutView.as_view(), name='about'),
