@@ -6,7 +6,7 @@
 <div class="container">
 <h1>Профиль</h1>
     {% if user.avatar %}
-        <img src="{{ user.avatar.url }}" alt="User avatar" width="200">
+        <img src="{{     user.avatar.url }}" alt="User avatar" width="200">
     {% endif %}
     <form method="post" class="post-form" action="{% url 'users:profile' %}" enctype="multipart/form-data">
         {% csrf_token %}

@@ -6,7 +6,7 @@
 <p>Email: <a href="mailto:1EY3o@example.com">1EY3o@example.com</a></p>
 <div class="container">
     <h2>Связаться с нами</h2>
-    <form action="{% url 'contacts' %}" method="post">
+    <form action="{% url 'posts:contacts' %}" method="post">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-group">

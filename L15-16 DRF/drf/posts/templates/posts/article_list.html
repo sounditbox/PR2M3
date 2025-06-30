@@ -8,7 +8,7 @@
     {% for article in articles %}
     <li class="list-group-item">
         <div class="row">
-            <div class="col-8"  onclick="location.href='{% url 'article_detail' article.pk %}'"  style="cursor: pointer;">
+            <div class="col-8"  onclick="location.href='{% url 'posts:article_detail' article.pk %}'"  style="cursor: pointer;">
                     <h2>{{ article.title|title }}</h2>
                     <h5>Author: {{ article.author }}</h5>
                     <h3>{{ article.content|truncatechars:20 }}</h3>
@@ -16,11 +16,11 @@
                     <p>👁️: {{ article.views }}   💬: {{ article.comments_count }}</p>
             </div>
             <div class="col">
-                <a href="{% url 'article_edit' article.pk %}"
+                <a href="{% url 'posts:article_edit' article.pk %}"
                    class="btn btn-secondary">Редактировать</a>
             </div>
             <div class="col">
-                <a href="{% url 'article_delete' article.pk %}"
+                <a href="{% url 'posts:article_delete' article.pk %}"
                    class="btn btn-danger">Удалить</a>
             </div>
         </div>

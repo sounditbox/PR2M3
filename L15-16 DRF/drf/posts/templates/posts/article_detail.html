@@ -18,11 +18,11 @@
     <p class="text-muted">👁️: {{ article.views }}</p>
     <div class="row">
         <div class="col-2">
-            <a href="{% url 'article_edit' article.pk %}"
+            <a href="{% url 'posts:article_edit' article.pk %}"
                class="btn btn-secondary">Редактировать</a>
         </div>
         <div class="col-1">
-            <a href="{% url 'article_delete' article.pk %}"
+            <a href="{% url 'posts:article_delete' article.pk %}"
                class="btn btn-danger">Удалить</a>
         </div>
 
@@ -42,7 +42,7 @@
             <p>{{ comment.author.name }}</p>
             <p>{{ comment.content }}</p>
             <p class="text-muted">Создано: {{ comment.created_at|date:"H:i d.m.Y" }}</p>
-            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'comment_delete' comment.pk %}'">Удалить
+            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'posts:comment_delete' comment.pk %}'">Удалить
             </button>
         </li>
         {% endfor %}

@@ -5,7 +5,7 @@
 {% block content %}
 <h1>О нас</h1>
 <p>Ну, мы))</p>
-<form action="{% url 'about' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'posts:about' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Отправить">
