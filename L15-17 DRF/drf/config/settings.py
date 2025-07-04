@@ -17,7 +17,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',
+    'rest_framework.authtoken',
     'django_extensions',
+
     "posts",
     'users',
 ]
@@ -31,6 +33,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ],
+}
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-dark',
     messages.INFO: 'alert-info',
@@ -79,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-from django.contrib.auth.password_validation import CommonPasswordValidator
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
