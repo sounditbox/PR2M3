@@ -76,7 +76,7 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     context_object_name = 'article'
     template_name = 'posts/article_confirm_delete.html'
-    success_url = reverse_lazy('article_list')
+    success_url = reverse_lazy('posts:article_list')
 
     def form_valid(self, form):
         try:
