@@ -1,7 +1,8 @@
+from datetime import timedelta
 from pathlib import Path
 
 from django.contrib import messages
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*u^xm$$y!fc8y)9lvjx_8m6gs7b9dv5v@_x!2)@iey0em2u)(e"
@@ -18,6 +19,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'django_extensions',
 
     "posts",
@@ -36,10 +38,15 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ],
 }
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+}
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-dark',
     messages.INFO: 'alert-info',

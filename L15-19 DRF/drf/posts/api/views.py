@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate, login
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.authtoken.models import Token
-
-from posts.models import Comment, Category, Tag, Article
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, \
+    IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
+from posts.models import Comment, Category, Tag, Article
+from .permissions import IsAuthorOrReadOnly, IsReadOnly, NoDelete
 from .serializers import CommentSerializer, CategorySerializer, TagSerializer, \
     ArticleSerializer
 
@@ -25,16 +25,19 @@ class CommentViewSet(ModelViewSet):
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser | IsReadOnly, NoDelete]
 
 
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    permission_classes = [IsAdminUser | IsReadOnly]
 
 
 class ArticleViewSet(ModelViewSet):
     queryset = Article.objects.prefetch_related('tags', 'category')
     serializer_class = ArticleSerializer
+    permission_classes = [IsAuthorOrReadOnly, ]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

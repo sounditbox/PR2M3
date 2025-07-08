@@ -131,7 +131,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('article_detail', kwargs={'pk': self.object.article.pk})
+        return reverse_lazy('posts:article_detail', kwargs={'pk': self.object.article.pk})
 
 
 @require_POST
@@ -140,15 +140,14 @@ def create_comment(request: HttpRequest, pk: int) -> HttpResponse:
     article = get_object_or_404(Article, pk=pk)
 
     form = CommentForm(request.POST)
-    print(form)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.article = article
         comment.author = request.user
         comment.save()
-        return redirect('article_detail', pk=article.pk)
+        return redirect('posts:article_detail', pk=article.pk)
 
-    return redirect('article_detail', pk=article.pk)
+    return redirect('posts:article_detail', pk=article.pk)
 
 
 @login_required

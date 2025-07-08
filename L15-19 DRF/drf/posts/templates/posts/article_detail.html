@@ -2,10 +2,16 @@
 {% block title %}Статья:{{ article.title }}{% endblock %}
 {% block content %}
 <div class="card">
-    <h1>{{ article.title }}</h1>
-    <h6>{{ article.status }}</h6>
+    <div class="card-header">
+        <figure class="figure">
+            <img src="{{ article.author.avatar.url }}"
+                 class="rounded-circle" style="width: 50px; height: 50px"  alt="User Image">
+            <figcaption class="figure-caption">{{ article.author.username }}
+            </figcaption>
+        </figure>
+    </div>
     <h6 class="text-muted">{{ article.category.name }}</h6>
-    <h4>{{ article.author.name }}</h4>
+    <h1>{{ article.title }}</h1>
     {% if article.image %}
         <img src="{{ article.image.url }}" alt="image">
     {% endif %}
@@ -16,6 +22,7 @@
     <p class="text-muted">{{ article.created_at }}</p>
     {% endif %}
     <p class="text-muted">👁️: {{ article.views }}</p>
+    {% if article.author == user %}
     <div class="row">
         <div class="col-2">
             <a href="{% url 'posts:article_edit' article.pk %}"
@@ -27,6 +34,7 @@
         </div>
 
     </div>
+    {% endif %}
 
 </div>
 <div class="card">
@@ -39,11 +47,13 @@
     <ul class="list-group">
         {% for comment in article.comments.all %}
         <li class="list-group-item">
-            <p>{{ comment.author.name }}</p>
+            <p>{{ comment.author.username }}</p>
             <p>{{ comment.content }}</p>
-            <p class="text-muted">Создано: {{ comment.created_at|date:"H:i d.m.Y" }}</p>
+            <p class="text-muted">{{ comment.created_at|date:"H:i d.m.Y" }}</p>
+            {% if comment.author == user %}
             <button type="button" class="btn btn-danger" onclick="location.href='{% url 'posts:comment_delete' comment.pk %}'">Удалить
             </button>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>

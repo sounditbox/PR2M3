@@ -72,7 +72,6 @@ class ArticleCreateForm(ModelForm):
         }
 
 
-
 class ArticleEditForm(ModelForm):
     class Meta:
         model = Article  # Указываем модель
@@ -92,10 +91,11 @@ class ArticleEditForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['author', 'content']
+        fields = ['content']
         widgets = {
             'content': Textarea(attrs={'class': 'form-control',
-                                       'placeholder': "Введите комментарий"}),
+                                       'placeholder': "Введите комментарий",
+                                       'rows': 3}),
         }
         labels = {
             'content': 'Комментарий'
