@@ -1,8 +1,11 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.generics import CreateAPIView, ListAPIView, \
+    ListCreateAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import (
     AllowAny,
@@ -15,12 +18,12 @@ from rest_framework.viewsets import ModelViewSet
 
 from posts.models import Comment, Category, Tag, Article
 from .filters import ArticleFilter
-from .permissions import IsAuthorOrReadOnly, IsReadOnly, NoDelete
+from .permissions import IsAuthorOrReadOnly, IsReadOnly, NoDelete, IsAdminOrSelf
 from .serializers import (
     CommentSerializer,
     CategorySerializer,
     TagSerializer,
-    ArticleSerializer
+    ArticleSerializer, AuthorSerializer, PasswordSerializer
 )
 
 
@@ -28,6 +31,11 @@ class DefaultPagination(PageNumberPagination):
     page_size = 3
     page_size_query_param = 'page_size'
     max_page_size = 5
+
+
+class CategoryCreateView(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 class CommentViewSet(ModelViewSet):
@@ -118,3 +126,35 @@ class ObtainAuthTokenView(APIView):
 
         token, _ = Token.objects.get_or_create(user=user)
         return Response({"token": token.key})
+
+
+class UserViewSet(ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = get_user_model().objects.all()
+    serializer_class = AuthorSerializer
+
+    @action(detail=True, methods=['post'], permission_classes=[IsAdminOrSelf])
+    def set_password(self, request, pk=None):
+        user = self.get_object()
+        serializer = PasswordSerializer(data=request.data, context={'user': user})
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({'status': 'password set'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False)
+    def recent_users(self, request):
+        recent_users = get_user_model().objects.all().order_by('-last_login')
+
+        page = self.paginate_queryset(recent_users)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(recent_users, many=True)
+        return Response(serializer.data)

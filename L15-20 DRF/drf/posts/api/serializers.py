@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from config import settings
 from posts.models import Comment, Category, Tag, Article
 
 
@@ -81,3 +82,19 @@ class ArticleSerializer(serializers.ModelSerializer):
         representation['tags'] = TagSerializer(instance.tags.all(),
                                                many=True).data
         return representation
+
+
+class PasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    repeat_password = serializers.CharField(required=True)
+
+    def validate(self, data):
+
+        if not self.context['user'].check_password(data['old_password']):
+            raise serializers.ValidationError("Old password is incorrect")
+
+        if data['new_password'] != data['repeat_password']:
+            raise serializers.ValidationError("Passwords do not match")
+
+        return data
