@@ -48,7 +48,7 @@ class Article(TimeStampedModel):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article_detail', kwargs={'pk': self.pk})
+        return reverse('posts:article_detail', kwargs={'pk': self.pk})
 
     def publish(self):
         if not self.status:

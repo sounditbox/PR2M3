@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_filters',
     'debug_toolbar',
     'django_extensions',
+    'corsheaders',
 
     "posts",
     'users',
@@ -33,6 +34,7 @@ INTERNAL_IPS = [
     # ...
 ]
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -43,6 +45,15 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    'http://frontend:3000',
+]
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 3,
@@ -51,7 +62,19 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissions',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
 }
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
 }
@@ -120,8 +143,8 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = reverse_lazy('article_list')
-LOGOUT_REDIRECT_URL = reverse_lazy('article_list')
+LOGIN_REDIRECT_URL = reverse_lazy('posts:article_list')
+LOGOUT_REDIRECT_URL = reverse_lazy('posts:article_list')
 LOGIN_URL = reverse_lazy('users:login')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

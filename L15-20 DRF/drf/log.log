@@ -1,0 +1,119 @@
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+WARNING:django.request:Not Found: /
+INFO:posts.signals:User admin logged in
+INFO:posts.signals:Article Getting Started with Django REST Framework updated by admin
+ERROR:django.request:Internal Server Error: /articles/edit/1/
+Traceback (most recent call last):
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\edit.py", line 206, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\edit.py", line 151, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\L15-20 DRF\drf\posts\views.py", line 116, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\edit.py", line 134, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\edit.py", line 63, in form_valid
+    return HttpResponseRedirect(self.get_success_url())
+                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\views\generic\edit.py", line 123, in get_success_url
+    url = self.object.get_absolute_url()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\L15-20 DRF\drf\posts\models.py", line 51, in get_absolute_url
+    return reverse('article_detail', kwargs={'pk': self.pk})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'article_detail' not found. 'article_detail' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\models.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:posts.signals:Article Getting Started with Django REST Framework updated by admin
+INFO:posts.signals:Article Getting Started with Django REST Framework updated by admin
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:posts.signals:User admin logged out
+INFO:posts.signals:User myuser created
+ERROR:django.request:Internal Server Error: /users/register/
+Traceback (most recent call last):
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\L15-20 DRF\drf\users\views.py", line 15, in register_view
+    user = form.save()
+           ^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\contrib\auth\forms.py", line 265, in save
+    user = self.set_password_and_save(user, commit=commit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\contrib\auth\forms.py", line 154, in set_password_and_save
+    user.save()
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\base.py", line 1023, in save_base
+    post_save.send(
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\dispatch\dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py", line 39, in user_post_save
+    instance.groups.add(Group.objects.get('Author'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\query.py", line 619, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\query.py", line 1493, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\query.py", line 1511, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\query.py", line 1518, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1646, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1678, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\_\Work\PR2M3\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1523, in build_filter
+    arg, value = filter_expr
+    ^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+INFO:django.utils.autoreload:D:\_\Work\PR2M3\L15-20 DRF\drf\posts\signals.py changed, reloading.
+INFO:django.utils.autoreload:Watching for file changes with StatReloader
+INFO:posts.signals:User myuser2 created
+INFO:posts.signals:User myuser2 logged in
